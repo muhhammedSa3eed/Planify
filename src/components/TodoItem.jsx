@@ -1,4 +1,4 @@
-import { Cancel, Check, Delete, Edit } from "@mui/icons-material";
+import { Cancel,  Delete, Edit } from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid,
   TextField,
 } from "@mui/material";
 import { TodoListContext } from "../contexts/TodoListContext";
