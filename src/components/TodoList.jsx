@@ -14,11 +14,8 @@ import { TodoListContext } from "../contexts/TodoListContext";
 const TodoList = () => {
   const { todos, setTodos } = useContext(TodoListContext);
 
-  const [alignment, setAlignment] = useState("الكل");
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
-  };
   const [todoTitle, setTodoTitle] = useState("");
+  const [todosType, setTodosType] = useState("all");
 
   const handleAddTodo = () => {
     if (!todoTitle) return;
@@ -30,6 +27,21 @@ const TodoList = () => {
     localStorage.setItem("TodosList", JSON.stringify(updatedTodos));
   };
 
+  // ^^ Todos Types Variables
+
+  const completedTodos = todos.filter((todo) => todo.iscompleted);
+  const incompletedTodos = todos.filter((todo) => !todo.iscompleted);
+
+  const handleChangeTodosType = (event) => {
+    setTodosType(event.target.value);
+  };
+  let displayedTodos =
+    todosType === "all"
+      ? todos
+      : todosType === "completed"
+      ? completedTodos
+      : incompletedTodos;
+
   // && side Effects
 
   useEffect(() => {
@@ -38,8 +50,9 @@ const TodoList = () => {
       setTodos(JSON.parse(storedTodos));
     }
   }, [setTodos]);
+
   return (
-    <div className="text-red-400 font-bold border rounded-md  px-4 py-2 w-[550px]">
+    <div className="text-red-400 font-bold border rounded-md  px-4 py-2 w-[550px] ">
       <header className="py-2">
         <h1 className="text-center  text-3xl pb-3">تاسكاتي</h1>
         <Divider />
@@ -49,18 +62,18 @@ const TodoList = () => {
           <ToggleButtonGroup
             className="flex items-center justify-center  w-full "
             color="primary"
-            value={alignment}
             exclusive
-            onChange={handleChange}
             aria-label="Platform"
+            value={todosType}
+            onChange={handleChangeTodosType}
           >
-            <ToggleButton value="android">تمت</ToggleButton>
-            <ToggleButton value="ios">لم تتم</ToggleButton>
-            <ToggleButton value="web">الكل</ToggleButton>
+            <ToggleButton value="completed">تمت</ToggleButton>
+            <ToggleButton value="incompleted">لم تتم</ToggleButton>
+            <ToggleButton value="all">الكل</ToggleButton>
           </ToggleButtonGroup>
         </section>
-        <section>
-          {todos.map((todo) => (
+        <section className=" max-h-[350px] overflow-y-auto">
+          {displayedTodos.map((todo) => (
             <TodoItem key={todo.id} todo={todo} />
           ))}
         </section>
@@ -81,6 +94,7 @@ const TodoList = () => {
                 onChange={(event) => {
                   setTodoTitle(event.target.value);
                 }}
+                disabled={todoTitle.length <= 0}
               />
             </Grid>
             <Grid size={4}>

@@ -3,6 +3,7 @@ import TodoList from "./components/TodoList";
 import { TodoListContext } from "./contexts/TodoListContext";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 // & Static Data
 const todos = [
@@ -27,19 +28,28 @@ const todos = [
 ];
 function App() {
   const [todosList, setTodosList] = useState(todos);
+  const theme = createTheme({
+    color: {
+      primary: {
+        main: "#1976d2",
+      },
+    },
+  });
 
   return (
-    <container
-      maxWidth="lg"
-      className="flex items-center justify-center min-h-screen "
-      style={{ direction: "rtl" }}
-    >
-      <TodoListContext.Provider
-        value={{ todos: todosList, setTodos: setTodosList }}
+    <ThemeProvider theme={theme}>
+      <container
+        maxWidth="lg"
+        className="flex items-center justify-center min-h-screen "
+        style={{ direction: "rtl" }}
       >
-        <TodoList />
-      </TodoListContext.Provider>
-    </container>
+        <TodoListContext.Provider
+          value={{ todos: todosList, setTodos: setTodosList }}
+        >
+          <TodoList />
+        </TodoListContext.Provider>
+      </container>
+    </ThemeProvider>
   );
 }
 
