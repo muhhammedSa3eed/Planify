@@ -3,7 +3,6 @@ import TodoList from "./components/TodoList";
 import { TodoListContext } from "./contexts/TodoListContext";
 import { useState } from "react";
 
-// & Static Data
 
 function App() {
   const [todosList, setTodosList] = useState([]);
