@@ -1,4 +1,4 @@
-import { Cancel,  Delete, Edit } from "@mui/icons-material";
+import { Cancel, Delete, Edit } from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -69,35 +69,102 @@ const TodoItem = ({ todo: { id, text, iscompleted, description } }) => {
 
   return (
     <>
+      {/* Delete Dialog */}
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
         style={{ direction: "rtl" }}
+        PaperProps={{
+          sx: {
+            backgroundColor: "white",
+            borderRadius: "16px",
+            width: "700px",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+          },
+        }}
+        BackdropProps={{
+          sx: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
+        }}
       >
-        <DialogTitle id="alert-dialog-title">
-          هل انت متأكد من رغبتك في حذف هذا التاسك ؟
+        <DialogTitle
+          sx={{
+            color: "#1a1a2e",
+            fontSize: "1.5rem",
+            fontWeight: "700",
+            padding: "32px 32px 16px",
+            margin: 0,
+          }}
+        >
+          حذف المهمة؟
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            لايمكنك التراجع عن الحذف في حال اختيار زر{" "}
-            <span className="text-red-500">الحذف</span>
-          </DialogContentText>
+        <DialogContent
+          sx={{ color: "#666", paddingX: "32px", paddingY: "16px" }}
+        >
+          <p
+            style={{
+              fontSize: "1rem",
+              lineHeight: "1.6",
+              margin: "0 0 12px 0",
+            }}
+          >
+            هل أنت متأكد من رغبتك في حذف هذه المهمة؟
+          </p>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#999",
+              lineHeight: "1.5",
+              margin: 0,
+            }}
+          >
+            لن تتمكن من استرجاع هذه المهمة بعد الحذف.
+          </p>
         </DialogContent>
         <DialogActions
-          sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+          sx={{ padding: "24px 32px", gap: "12px", justifyContent: "flex-end" }}
         >
           <Button
             onClick={handleClose}
-            sx={{ backgroundColor: "#1832C9", color: "white" }}
+            sx={{
+              color: "#666",
+              textTransform: "none",
+              fontSize: "1rem",
+              fontWeight: "500",
+              padding: "10px 24px",
+              border: "1px solid #e0e0e0",
+              borderRadius: "8px",
+              backgroundColor: "transparent",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                backgroundColor: "#f5f5f5",
+                borderColor: "#d0d0d0",
+              },
+            }}
           >
-            اغلاق
+            إلغاء
           </Button>
           <Button
-            onClick={handleDeleteTodo}
+            onClick={() => {
+              handleDeleteTodo();
+              handleClose();
+            }}
             autoFocus
-            sx={{ backgroundColor: "#DE3818", color: "white" }}
+            sx={{
+              backgroundColor: "#ef4444",
+              color: "white",
+              textTransform: "none",
+              fontSize: "1rem",
+              fontWeight: "600",
+              padding: "10px 24px",
+              borderRadius: "8px",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                backgroundColor: "#dc2626",
+                boxShadow: "0 8px 20px rgba(239, 68, 68, 0.3)",
+              },
+            }}
           >
             حذف
           </Button>
@@ -108,54 +175,176 @@ const TodoItem = ({ todo: { id, text, iscompleted, description } }) => {
       <Dialog
         open={isEditOpen}
         onClose={handleEditClose}
-        sx={{ direction: "rtl" }}
+        style={{ direction: "rtl" }}
+        PaperProps={{
+          sx: {
+            backgroundColor: "white",
+            borderRadius: "16px",
+            width: "700px",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+          },
+        }}
+        BackdropProps={{
+          sx: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
+        }}
       >
-        <DialogTitle sx={{ color: "blue" }}>تعديل التاسك</DialogTitle>
-        <DialogContent sx={{ width: "550px" }}>
-          <TextField
-            autoFocus
-            required
-            name="email"
-            label="العنوان "
-            type="text"
-            fullWidth
-            variant="standard"
-            value={updatedTodo.title}
-            onChange={(e) => {
-              setUpdatedTodo({ ...updatedTodo, title: e.target.value });
-            }}
-          />
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            label="الوصف"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={updatedTodo.description}
-            onChange={(e) => {
-              setUpdatedTodo({ ...updatedTodo, description: e.target.value });
-            }}
-          />
+        <DialogTitle
+          sx={{
+            color: "#1a1a2e",
+            fontSize: "1.5rem",
+            fontWeight: "700",
+            padding: "32px 32px 16px",
+            margin: 0,
+          }}
+        >
+          تعديل المهمة
+        </DialogTitle>
+        <DialogContent
+          sx={{ color: "#333", paddingX: "32px", paddingY: "16px" }}
+        >
+          <div className="space-y-6 mt-2">
+            <div>
+              <label
+                style={{
+                  color: "#1a1a2e",
+                  fontSize: "0.95rem",
+                  fontWeight: "600",
+                  display: "block",
+                  marginBottom: "10px",
+                }}
+              >
+                العنوان
+              </label>
+              <TextField
+                autoFocus
+                required
+                fullWidth
+                value={updatedTodo.title}
+                onChange={(e) =>
+                  setUpdatedTodo({ ...updatedTodo, title: e.target.value })
+                }
+                variant="outlined"
+                placeholder="أدخل عنوان المهمة"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    backgroundColor: "#f8f9fa",
+                    color: "#1a1a2e",
+                    borderRadius: "8px",
+                    fontSize: "1rem",
+                    "& fieldset": { borderColor: "#e0e0e0" },
+                    "&:hover fieldset": { borderColor: "#d0d0d0" },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#3b82f6",
+                      borderWidth: "2px",
+                    },
+                  },
+                  "& .MuiOutlinedInput-input": {
+                    textAlign: "right",
+                    padding: "12px 14px",
+                  },
+                  "& .MuiOutlinedInput-input::placeholder": {
+                    color: "#999",
+                    opacity: 1,
+                  },
+                }}
+              />
+            </div>
+
+            <div>
+              <label
+                style={{
+                  color: "#1a1a2e",
+                  fontSize: "0.95rem",
+                  fontWeight: "600",
+                  display: "block",
+                  marginBottom: "10px",
+                }}
+              >
+                الوصف
+              </label>
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                value={updatedTodo.description}
+                onChange={(e) =>
+                  setUpdatedTodo({
+                    ...updatedTodo,
+                    description: e.target.value,
+                  })
+                }
+                placeholder="أضف وصفاً للمهمة..."
+                variant="outlined"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    backgroundColor: "#f8f9fa",
+                    color: "#1a1a2e",
+                    borderRadius: "8px",
+                    fontSize: "1rem",
+                    "& fieldset": { borderColor: "#e0e0e0" },
+                    "&:hover fieldset": { borderColor: "#d0d0d0" },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#3b82f6",
+                      borderWidth: "2px",
+                    },
+                  },
+                  "& .MuiOutlinedInput-input": {
+                    textAlign: "right",
+                    padding: "12px 14px",
+                  },
+                  "& .MuiOutlinedInput-input::placeholder": {
+                    color: "#999",
+                    opacity: 1,
+                  },
+                }}
+              />
+            </div>
+          </div>
         </DialogContent>
         <DialogActions
-          sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+          sx={{ padding: "24px 32px", gap: "12px", justifyContent: "flex-end" }}
         >
           <Button
             onClick={handleEditClose}
-            sx={{ backgroundColor: "#DE3818", color: "white" }}
+            sx={{
+              color: "#666",
+              textTransform: "none",
+              fontSize: "1rem",
+              fontWeight: "500",
+              padding: "10px 24px",
+              border: "1px solid #e0e0e0",
+              borderRadius: "8px",
+              backgroundColor: "transparent",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                backgroundColor: "#f5f5f5",
+                borderColor: "#d0d0d0",
+              },
+            }}
           >
-            اغلاق
+            إلغاء
           </Button>
           <Button
             autoFocus
-            sx={{ backgroundColor: "#1832C9", color: "white" }}
-            onClick={() => {
-              handleEditTodo(id);
+            onClick={() => handleEditTodo(id)}
+            sx={{
+              backgroundColor: "#3b82f6",
+              color: "white",
+              textTransform: "none",
+              fontSize: "1rem",
+              fontWeight: "600",
+              padding: "10px 24px",
+              borderRadius: "8px",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                backgroundColor: "#2563eb",
+                boxShadow: "0 8px 20px rgba(59, 130, 246, 0.3)",
+              },
             }}
           >
-            تعديل
+            حفظ
           </Button>
         </DialogActions>
       </Dialog>
