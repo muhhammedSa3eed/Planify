@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import TodoList from "./components/TodoList";
+import { TodoListContext } from "./contexts/TodoListContext";
+import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
 
+// & Static Data
+const todos = [
+  {
+    id: uuidv4(),
+    text: "اهلا و سهلا",
+    description: "",
+    iscompleted: false,
+  },
+  {
+    id: uuidv4(),
+    text: "مرحبا بكم",
+    description: "هذا وصف المهمة",
+    iscompleted: false,
+  },
+  {
+    id: uuidv4(),
+    text: "كيف الحال",
+    description: "",
+    iscompleted: false,
+  },
+];
 function App() {
+  const [todosList, setTodosList] = useState(todos);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <container
+      maxWidth="lg"
+      className="flex items-center justify-center min-h-screen "
+      style={{ direction: "rtl" }}
+    >
+      <TodoListContext.Provider
+        value={{ todos: todosList, setTodos: setTodosList }}
+      >
+        <TodoList />
+      </TodoListContext.Provider>
+    </container>
   );
 }
 
