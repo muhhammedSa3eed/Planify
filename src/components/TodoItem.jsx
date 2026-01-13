@@ -162,18 +162,38 @@ const TodoItem = ({ todo: { id, text, iscompleted, description } }) => {
       </Dialog>
 
       <div
-        className={`p-5 rounded-lg transition-all duration-300 ${
+        className={`p-5 rounded-lg transition-all duration-300 relative overflow-hidden group ${
           iscompleted
-            ? "bg-gradient-to-r from-green-500/20 to-emerald-600/10 border-green-400/50"
+            ? "bg-gradient-to-r from-emerald-500/30 via-teal-500/20 to-cyan-600/10 border-emerald-400/60 shadow-lg shadow-emerald-500/20"
             : "bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border-cyan-400/30"
         } border hover:border-white/40 hover:bg-opacity-50`}
       >
+        {/* Completed Badge */}
+        {iscompleted && (
+          <div className="absolute top-3 right-3 flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 px-3 py-1 rounded-full">
+            <svg
+              className="w-4 h-4 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <span className="text-xs font-bold text-white">مكتملة</span>
+          </div>
+        )}
+
         <div className="flex items-start justify-between gap-4">
           {/* Left Content */}
           <div className="flex-1 min-w-0">
             <h3
               className={`text-lg font-bold mb-2 transition-all ${
-                iscompleted ? "text-white/40 line-through" : "text-white/90"
+                iscompleted
+                  ? "text-emerald-200 line-through bg-gradient-to-r from-emerald-400/40 to-teal-400/40 px-2 py-1 rounded"
+                  : "text-white/90"
               }`}
             >
               {text}
@@ -181,7 +201,7 @@ const TodoItem = ({ todo: { id, text, iscompleted, description } }) => {
             {description && (
               <p
                 className={`text-sm transition-all leading-relaxed ${
-                  iscompleted ? "text-white/20" : "text-white/60"
+                  iscompleted ? "text-emerald-200/50" : "text-white/60"
                 }`}
               >
                 {description}
@@ -204,16 +224,16 @@ const TodoItem = ({ todo: { id, text, iscompleted, description } }) => {
                 height: "44px",
                 borderRadius: "50%",
                 background: iscompleted
-                  ? "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)"
-                  : "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                  ? "linear-gradient(135deg, #10b981 0%, #059669 100%)"
+                  : "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
                 color: "white",
                 transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                border: "1px solid rgba(255,255,255,0.2)",
+                border: "2px solid rgba(255,255,255,0.3)",
                 "&:hover": {
-                  transform: "scale(1.15) translateY(-2px)",
+                  transform: "scale(1.15) translateY(-3px)",
                   boxShadow: iscompleted
-                    ? "0 8px 20px rgba(239, 68, 68, 0.4)"
-                    : "0 8px 20px rgba(16, 185, 129, 0.4)",
+                    ? "0 12px 30px rgba(16, 185, 129, 0.5)"
+                    : "0 12px 30px rgba(239, 68, 68, 0.5)",
                 },
                 display: "flex",
                 alignItems: "center",
@@ -221,9 +241,19 @@ const TodoItem = ({ todo: { id, text, iscompleted, description } }) => {
               }}
             >
               {iscompleted ? (
-                <Cancel sx={{ fontSize: "22px" }} />
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               ) : (
-                <Check sx={{ fontSize: "22px" }} />
+                <Cancel sx={{ fontSize: "22px" }} />
               )}
             </Button>
 

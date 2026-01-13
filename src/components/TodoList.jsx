@@ -248,7 +248,7 @@ const TodoList = () => {
           {/* Right Section - Todos List */}
           <div className="lg:col-span-2">
             {/* Filter Section */}
-            <div className="mb-8">
+            <div className="mb-4 slide-in-left">
               <div className="flex gap-3 justify-center sm:justify-start flex-wrap">
                 <ToggleButtonGroup
                   color="primary"
@@ -290,23 +290,24 @@ const TodoList = () => {
               </div>
             </div>
 
-            {/* Todos Grid */}
-            <div className="space-y-4">
+            {/* Todos Grid with Enhanced Scrolling */}
+            <div className="space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto pr-2 custom-scroll">
               {displayedTodos.length > 0 ? (
                 <div className="grid gap-4">
-                  {displayedTodos.map((todo) => (
+                  {displayedTodos.map((todo, index) => (
                     <div
                       key={todo.id}
-                      className="bg-white/10 backdrop-blur-xl rounded-xl border border-white/20 hover:border-white/40 hover:bg-white/15 transition-all hover:shadow-lg hover:shadow-cyan-500/20"
+                      className="bg-white/10 backdrop-blur-xl rounded-xl border border-white/20 hover:border-white/40 hover:bg-white/15 transition-all hover:shadow-lg hover:shadow-cyan-500/20 fade-in-up"
+                      style={{ animationDelay: `${index * 0.05}s` }}
                     >
                       <TodoItem todo={todo} />
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="bg-white/10 backdrop-blur-xl rounded-2xl border-2 border-dashed border-white/20 p-12 text-center hover:border-white/30 transition-all">
+                <div className="bg-white/10 backdrop-blur-xl rounded-2xl border-2 border-dashed border-white/20 p-12 text-center hover:border-white/30 transition-all fade-in-up">
                   <div className="mb-4">
-                    <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full border border-cyan-400/30">
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full border border-cyan-400/30 pulse-glow">
                       <span className="text-5xl">📝</span>
                     </div>
                   </div>
