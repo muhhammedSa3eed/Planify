@@ -38,17 +38,13 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <container
-        maxWidth="lg"
-        className="flex items-center justify-center min-h-screen "
-        style={{ direction: "rtl" }}
-      >
+      <div style={{ direction: "rtl" }}>
         <TodoListContext.Provider
           value={{ todos: todosList, setTodos: setTodosList }}
         >
           <TodoList />
         </TodoListContext.Provider>
-      </container>
+      </div>
     </ThemeProvider>
   );
 }

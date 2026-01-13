@@ -161,53 +161,122 @@ const TodoItem = ({ todo: { id, text, iscompleted, description } }) => {
         </DialogActions>
       </Dialog>
 
-      <Grid
-        container
-        spacing={2}
-        className={`px-4 py-2 items-center justify-between rounded-lg bg-blue-300 my-4 ${
-          iscompleted ? "border-2 border-emerald-500 " : ""
-        }`}
+      <div
+        className={`p-5 rounded-lg transition-all duration-300 ${
+          iscompleted
+            ? "bg-gradient-to-r from-green-500/20 to-emerald-600/10 border-green-400/50"
+            : "bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border-cyan-400/30"
+        } border hover:border-white/40 hover:bg-opacity-50`}
       >
-        <Grid size={8}>
-          <h3 className="text-black">{text}</h3>
-          <h4>{description}</h4>
-        </Grid>
-        <Grid
-          size={4}
-          className="flex items-center gap-2 "
-          style={{ direction: "ltr" }}
-        >
-          <Button
-            variant="outlined"
-            color="error"
-            className="!rounded-full !min-w-0 !p-1 "
-            onClick={handleClickOpen}
+        <div className="flex items-start justify-between gap-4">
+          {/* Left Content */}
+          <div className="flex-1 min-w-0">
+            <h3
+              className={`text-lg font-bold mb-2 transition-all ${
+                iscompleted ? "text-white/40 line-through" : "text-white/90"
+              }`}
+            >
+              {text}
+            </h3>
+            {description && (
+              <p
+                className={`text-sm transition-all leading-relaxed ${
+                  iscompleted ? "text-white/20" : "text-white/60"
+                }`}
+              >
+                {description}
+              </p>
+            )}
+          </div>
+
+          {/* Right Actions */}
+          <div
+            className="flex items-center gap-2 flex-shrink-0"
+            style={{ direction: "ltr" }}
           >
-            {" "}
-            <Delete className=" " />
-          </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            className="!rounded-full !min-w-0 !p-1 "
-            onClick={() => {
-              setIsEditOpen(true);
-            }}
-          >
-            <Edit />
-          </Button>
-          <Button
-            variant="outlined"
-            color={`${iscompleted === true ? "error" : "success"}`}
-            className="!rounded-full !min-w-0 !p-1 "
-            onClick={() => {
-              handleIsCompleted();
-            }}
-          >
-            {iscompleted === true ? <Cancel /> : <Check />}
-          </Button>
-        </Grid>
-      </Grid>
+            <Button
+              size="small"
+              onClick={() => {
+                handleIsCompleted();
+              }}
+              sx={{
+                minWidth: "44px",
+                height: "44px",
+                borderRadius: "50%",
+                background: iscompleted
+                  ? "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)"
+                  : "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                color: "white",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                "&:hover": {
+                  transform: "scale(1.15) translateY(-2px)",
+                  boxShadow: iscompleted
+                    ? "0 8px 20px rgba(239, 68, 68, 0.4)"
+                    : "0 8px 20px rgba(16, 185, 129, 0.4)",
+                },
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {iscompleted ? (
+                <Cancel sx={{ fontSize: "22px" }} />
+              ) : (
+                <Check sx={{ fontSize: "22px" }} />
+              )}
+            </Button>
+
+            <Button
+              size="small"
+              onClick={() => {
+                setIsEditOpen(true);
+              }}
+              sx={{
+                minWidth: "44px",
+                height: "44px",
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+                color: "white",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                "&:hover": {
+                  transform: "scale(1.15) translateY(-2px)",
+                  boxShadow: "0 8px 20px rgba(59, 130, 243, 0.4)",
+                },
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Edit sx={{ fontSize: "22px" }} />
+            </Button>
+
+            <Button
+              size="small"
+              onClick={handleClickOpen}
+              sx={{
+                minWidth: "44px",
+                height: "44px",
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)",
+                color: "white",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                "&:hover": {
+                  transform: "scale(1.15) translateY(-2px)",
+                  boxShadow: "0 8px 20px rgba(244, 63, 94, 0.4)",
+                },
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Delete sx={{ fontSize: "22px" }} />
+            </Button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
